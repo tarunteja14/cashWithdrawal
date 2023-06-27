@@ -1,0 +1,175 @@
+**Index.JS '../cashWithdrawal'
+
+import {Component} from 'react'
+import DenominationItem from '../DenominationItem'
+import './index.css'
+
+class CashWithdrawal extends Component {
+  state = {
+    balance: 2000,
+  }
+
+  updateBalance = value => {
+    this.setState(prevState => ({balance: prevState.balance - value}))
+  }
+
+  render() {
+    const {denominationList} = this.props
+    const {balance} = this.state
+    const {name} = 'Sarah Williams'
+    const {initial} = name.slice(0, 1)
+
+    return (
+      <div className="app-container">
+        <div className="card-container">
+          <div className="name-container">
+            <p className="startLetter">{initial}</p>
+            <p className="name">{name}</p>
+          </div>
+          <div className="balance-container">
+            <p className="balance-name">Your Balance</p>
+            <p className="balance">
+              {balance}
+              <br />
+              <span className="currency">In Rupees</span>
+            </p>
+          </div>
+
+          <p className="withdraw-text">Withdraw</p>
+          <p className="rupees-text">CHOOSE SUM (IN RUPEES)</p>
+          <ul className="denomination-item">
+            {denominationList.map(eachItem => (
+              <DenominationItem
+                key={eachItem.id}
+                denominationDetails={eachItem}
+                updateBalance={this.updateBalance}
+              />
+            ))}
+          </ul>
+        </div>
+      </div>
+    )
+  }
+}
+
+export default CashWithdrawal
+
+**index.css "../cashWithdrawal"
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  height: 100vh;
+}
+.card-container {
+  background-color: #150b3e;
+  display: flex;
+  flex-direction: column;
+  border-radius: 14px;
+  width: 40%;
+  padding-left: 28px;
+  padding-top: 32px;
+  padding-right: 28px;
+  padding-bottom: 16px;
+}
+.name-container {
+  display: flex;
+  flex-direction: row;
+}
+.startLetter {
+  background-color: #c7d2fe;
+  height: 50px;
+  width: 55px;
+  border-radius: 50px;
+  text-align: center;
+  padding-top: 13px;
+  color: #7c3aed;
+}
+.name {
+  color: #c4c4c4;
+  font-family: 'Roboto';
+  font-size: 25px;
+  margin-left: 6px;
+  font-weight: 300;
+  padding: 5px;
+}
+.balance-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.balance-name {
+  color: #585076;
+  font-family: 'Roboto';
+  font-size: 24px;
+}
+.balance {
+  color: #d4d2db;
+  font-family: 'Roboto';
+  font-size: 25px;
+}
+.currency {
+  color: #585076;
+  font-family: 'Roboto';
+  font-size: 12px;
+  font-weight: 500;
+  padding-top: 25px;
+}
+.withdraw-text {
+  color: #d4d2db;
+  font-family: 'Roboto';
+  font-size: 26px;
+  font-weight: 400;
+}
+.rupees-text {
+  color: #585076;
+  font-family: 'Roboto';
+  font-size: 20px;
+  font-weight: 500;
+}
+
+**index.js '../denominationItem'
+import './index.css'
+
+const DenominationItem = props => {
+  const {denominationDetails, updateBalance} = props
+  const {value} = denominationDetails
+
+  const onWithdraw = () => {
+    updateBalance(value)
+  }
+
+  return (
+    <li className="withdraw-list">
+      <button type="button" className="withdraw-btn" onClick={onWithdraw}>
+        {value}
+      </button>
+    </li>
+  )
+}
+
+export default DenominationItem
+
+**index.css '../DenominationItem'
+
+.withdraw-list {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+  width: 40%;
+}
+.withdraw-btn {
+  background-color: #585076;
+  border: 1px solid #d4d2db;
+  color: #c4c4c4;
+  font-family: 'Roboto';
+  font-size: 14px;
+  height: 20px;
+  width: 40px;
+  outline: none;
+  cursor: pointer;
+}
+
